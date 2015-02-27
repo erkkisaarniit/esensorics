@@ -1,5 +1,5 @@
 <?php
-	error_reporting(E_ALL);
+	#error_reporting(E_ALL);
 
 	$user = 'root';
 	$password = 'root';
@@ -46,7 +46,7 @@
 
 		if (strlen($error)==0)
 		{
-			$conn->query("INSERT into surveys (name, description, videolink) VALUES (\"".mysql_real_escape_string($_POST["name"])."\", \"".mysql_real_escape_string($_POST["description"])."\", \"".mysql_real_escape_string($_POST["videolink"])."\")");
+			$conn->query("INSERT into surveys (name, description, videolink) VALUES (\"".mysqli_real_escape_string($conn,$_POST["name"])."\", \"".mysqli_real_escape_string($conn,$_POST["description"])."\", \"".mysqli_real_escape_string($conn,$_POST["videolink"])."\")");
 			header('Location: surveys.php?success=1');
 		}	
 	}
@@ -111,17 +111,17 @@
 			<input type="hidden" name="addnew" value="1" />
 			<div class="table_row_nostyle">
 				<div class="table_field" style="width:150px;">Name</div>
-				<div class="table_field" style="width:250px;"><input name="name" type="text" value="<?=addslashes($_POST["name"])?>" /></div>
+				<div class="table_field" style="width:250px;"><input name="name" type="text" value="<?=htmlspecialchars($_POST["name"])?>" /></div>
 			</div>
 
 			<div class="table_row_nostyle">
 				<div class="table_field" style="width:150px;">Description</div>
-				<div class="table_field" style="width:250px;"><textarea name="description"><?=htmlentities($_POST["description"])?></textarea></div>
+				<div class="table_field" style="width:250px;"><textarea name="description"><?=htmlspecialchars($_POST["description"])?></textarea></div>
 			</div>
 
 			<div class="table_row_nostyle">
 				<div class="table_field" style="width:150px;">Youtube video ID</div>
-				<div class="table_field" style="width:250px;"><input name="videolink" type="text" value="<?=addslashes($_POST["videolink"])?>" maxlength="11" /></div>
+				<div class="table_field" style="width:250px;"><input name="videolink" type="text" value="<?=htmlspecialchars($_POST["videolink"])?>" maxlength="11" /></div>
 			</div>
 
 			<div class="table_row_nostyle"><input type="submit" id="addnew_submit" value="Save" /></div>
@@ -145,6 +145,16 @@
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    echo "<div class=\"table\" style=\"width:800px;\">";
+
+	        echo "
+	        	<div class=\"table_row_header\">
+	        		<div class=\"table_field\" style=\"width:30px;\">ID</div>
+	        		<div class=\"table_field\" style=\"width:100px;\">Name</div>
+	        		<div class=\"table_field\" style=\"width:250px;\">Description</div>
+	        		<div class=\"table_field\" style=\"width:100px;\">Youtube video</div>
+	        		<div class=\"table_field\" style=\"width:50px;\">Delete</div>
+	        	</div>
+	        ";
 
 	    while($row = $result->fetch_assoc()) {
 

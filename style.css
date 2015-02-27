@@ -45,6 +45,16 @@ input[type=text], textarea {
     width:100%;
     height:auto;
 }
+.table_row_header {
+    display:table-row;
+    border-bottom:2px solid #CCC;
+    float:left;
+    clear:both;
+    width:100%;
+    height:auto;
+    background: #e2dfc9;
+    font-weight: bold;
+}
 .table_row_nostyle {
     display:table-row;
     float:left;
